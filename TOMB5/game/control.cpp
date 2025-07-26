@@ -95,7 +95,7 @@ long tiltyoff;
 long OnObject;
 long height_type;
 
-long InItemControlLoop = 0;
+uchar InItemControlLoop = 0;
 short ItemNewRooms[256][2];
 short ItemNewRoomNo = 0;
 
