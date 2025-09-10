@@ -627,7 +627,7 @@ void KeyHoleCollision(short item_number, ITEM_INFO* l, COLL_INFO* coll)
 		{
 			if (!lara.IsMoving)
 			{
-				if (item->status == ITEM_INVISIBLE)
+				if (item->status != ITEM_INACTIVE)
 					return;
 
 				if (GLOBAL_inventoryitemchosen == -1)
