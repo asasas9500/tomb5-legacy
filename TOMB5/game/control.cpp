@@ -136,6 +136,7 @@ static short los_rooms[20];
 static short cdtrack = -1;
 static char richcutfrigflag = 0;
 static char globoncuttrig;
+static uchar disable_spotcam;
 
 long ControlPhase(long nframes, long demo_mode)
 {
@@ -223,7 +224,7 @@ long ControlPhase(long nframes, long demo_mode)
 					return 2;
 			}
 
-			if (input & IN_PAUSE && gfGameMode == 0)
+			if (input & IN_PAUSE && !gfGameMode)
 			{
 				if (S_PauseMenu() == 8)
 					return 1;
@@ -434,28 +435,31 @@ long ControlPhase(long nframes, long demo_mode)
 			GLOBAL_inventoryitemchosen = NO_ITEM;
 		}
 
-		if (GLOBAL_playing_cutseq)
+		if (!GLOBAL_playing_cutseq && LaraDrawType != LARA_DIVESUIT)
 		{
-			camera.type = CINEMATIC_CAMERA;
-			CalculateCamera();
+			HairControl(0, 0, 0);
+
+			if (gfLevelFlags & GF_YOUNGLARA)
+				HairControl(0, 1, 0);
 		}
-		else
+
+		if (!GLOBAL_playing_cutseq)
 		{
-			if (LaraDrawType != LARA_DIVESUIT)
-			{
-				HairControl(0, 0, 0);
-
-				if (gfLevelFlags & GF_YOUNGLARA)
-					HairControl(0, 1, 0);
-			}
-
 			if (!bUseSpotCam)
 			{
 				bTrackCamInit = 0;
 				CalculateCamera();
 			}
 			else
+			{
+				disable_spotcam = 0;
 				CalculateSpotCams();
+			}
+		}
+		else
+		{
+			camera.type = CINEMATIC_CAMERA;
+			CalculateCamera();
 		}
 
 		CamRot.y = (mGetAngle(camera.pos.z, camera.pos.x, camera.target.z, camera.target.x) >> 4) & 0xFFF;
