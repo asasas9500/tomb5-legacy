@@ -71,7 +71,7 @@ void DrawGameInfo(long timed)
 
 void DrawHealthBar(long flash_state)
 {
-	static long old_hitpoints;
+	static long old_hitpoints = 1000;
 	long hitpoints;
 
 	hitpoints = lara_item->hit_points;
