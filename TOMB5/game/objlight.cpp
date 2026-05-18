@@ -158,7 +158,7 @@ void ControlElectricalLight(short item_number)
 			SoundEffectCS(SFX_ELEC_LIGHT_CRACKLES, &item->pos, (32 * (shade & 0xFFFFFFF8)) | 8);
 	}
 
-	r = ((shade * (item->trigger_flags & 0x1F)) << 3) >> 8;
+	r = (shade * ((item->trigger_flags & 0x1F) << 3)) >> 8;
 	g = (shade * ((item->trigger_flags >> 2) & 0xF8)) >> 8;
 	b = (shade * ((item->trigger_flags >> 7) & 0xF8)) >> 8;
 	TriggerDynamic(item->pos.x_pos, item->pos.y_pos, item->pos.z_pos, 24, r, g, b);

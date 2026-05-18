@@ -8,6 +8,7 @@ void SOUND_Stop();
 void StopSoundEffect(long sfx);
 void GetPanVolume(SoundSlot* slot);
 long SoundEffect(long sfx, PHD_3DPOS* pos, long flags);
+void SOUND_EndScene();
 
 extern SAMPLE_INFO* sample_infos;
 extern SoundSlot LaSlot[32];

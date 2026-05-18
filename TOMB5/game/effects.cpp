@@ -533,7 +533,6 @@ void TL_12(ITEM_INFO* item)
 void SoundEffects()
 {
 	OBJECT_VECTOR* sound;
-	SoundSlot* slot;
 	
 	for (int i = 0; i < number_sound_effects; i++)
 	{
@@ -560,41 +559,7 @@ void SoundEffects()
 	if (flipeffect != -1)
 		effect_routines[flipeffect](0);
 
-	if (!sound_active)
-		return;
-
-	for (int i = 0; i < 32; i++)
-	{
-		slot = &LaSlot[i];
-
-		if (slot->nSampleInfo >= 0)
-		{
-			if ((sample_infos[slot->nSampleInfo].flags & 3) != 3)
-			{
-				if (!S_SoundSampleIsPlaying(i))
-					slot->nSampleInfo = -1;
-				else
-				{
-					GetPanVolume(slot);
-					S_SoundSetPanAndVolume(i, (short)slot->nPan, (ushort)slot->nVolume);
-				}
-			}
-			else
-			{
-				if (!slot->nVolume)
-				{
-					S_SoundStopSample(i);
-					slot->nSampleInfo = -1;
-				}
-				else
-				{
-					S_SoundSetPanAndVolume(i, (short)slot->nPan, (ushort)slot->nVolume);
-					S_SoundSetPitch(i, slot->nPitch);
-					slot->nVolume = 0;
-				}
-			}
-		}
-	}
+	SOUND_EndScene();
 }
 
 short DoBloodSplat(long x, long y, long z, short random, short y_rot, short room_number)
