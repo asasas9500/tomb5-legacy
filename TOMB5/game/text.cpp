@@ -429,33 +429,32 @@ void UpdatePulseColour()
 {
 	long color, specular;
 	static uchar PulseCnt = 0;
-	uchar c, r, g, b;
+	uchar c, r, g, b, sr, sg, sb;
 
 	PulseCnt = (PulseCnt + 1) & 0x1F;
 
-	if (PulseCnt > 16)
+	if (PulseCnt >= 16)
 		c = -PulseCnt;
 	else
 		c = PulseCnt;
 
 	c <<= 3;
 	aCalcColorSplit(RGBONLY(c, c, c), &color, &specular);
+	r = CLRR(color);
+	g = CLRG(color);
+	b = CLRB(color);
+	sr = CLRR(specular);
+	sg = CLRG(specular);
+	sb = CLRB(specular);
 
 	for (int i = 0; i < 16; i++)
 	{
-		r = CLRR(color);
-		g = CLRG(color);
-		b = CLRB(color);
 		FontShades[1][i << 1].r = r;
 		FontShades[1][i << 1].g = g;
 		FontShades[1][i << 1].b = b;
-
-		r = CLRR(specular);
-		g = CLRG(specular);
-		b = CLRB(specular);
-		FontShades[1][(i << 1) + 1].r = r;
-		FontShades[1][(i << 1) + 1].g = g;
-		FontShades[1][(i << 1) + 1].b = b;
+		FontShades[1][(i << 1) + 1].r = sr;
+		FontShades[1][(i << 1) + 1].g = sg;
+		FontShades[1][(i << 1) + 1].b = sb;
 	}
 }
 
